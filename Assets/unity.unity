@@ -922,8 +922,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  laserPrefab: {fileID: 0}
-  firePoint: {fileID: 0}
+  laserPrefab: {fileID: 3228728667624715132, guid: 78dd9b9ba79f4485292e640773613a21, type: 3}
+  firePoint: {fileID: 611451380}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
