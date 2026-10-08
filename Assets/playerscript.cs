@@ -1,35 +1,68 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using System.Collections;
 
-public class playerscript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    Rigidbody2D rb;
-    Vector2 input;
+    private float horizontal;
+    private float speed = 8f;
+    private float jumpingPower = 16f;
+    private bool isFacingRight = true;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private GameObject laserPrefab;
+    [SerializeField] private Transform firePoint;
 
     void Update()
     {
-        var k = Keyboard.current;
-        if (k == null) return; // no keyboard connected
+        horizontal = 0;
 
-        float x = 0f;
-        float y = 0f;
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            print("Jumping");
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
+        }
 
-        if (k.dKey.isPressed || k.rightArrowKey.isPressed) x += 1f;
-        if (k.aKey.isPressed || k.leftArrowKey.isPressed) x -= 1f;
-        if (k.wKey.isPressed || k.upArrowKey.isPressed) y += 1f;
-        if (k.sKey.isPressed || k.downArrowKey.isPressed) y -= 1f;
+        if (Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+        }
 
-        input = new Vector2(x, y).normalized;
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+        }
+
+        Flip();
+    }
+    private void Shoot()
+    {
+        GameObject laser = Instantiate(laserPrefab, firePoint.position, Quaternion.identity);
+        float direction = isFacingRight ? 1f : -1f;
+        laser.GetComponent<LaserProjectile>().Launch(direction);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        rb.linearVelocity = input * speed;
+        horizontal = Input.GetAxisRaw("Horizontal");
+        rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private void Flip()
+    {
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
     }
 }
