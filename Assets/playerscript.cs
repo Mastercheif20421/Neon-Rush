@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GameObject laser = Instantiate(laserPrefab, firePoint.position, Quaternion.identity);
         float direction = isFacingRight ? 1f : -1f;
-        laser.GetComponent<LaserProjectile>().Launch(direction);
+        laser.GetComponent<LaserBeam>().Launch(direction);
     }
 
     private void FixedUpdate()

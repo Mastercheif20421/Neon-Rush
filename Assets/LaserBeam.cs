@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LaserProjectile : MonoBehaviour
+public class LaserBeam: MonoBehaviour
 {
     [SerializeField] private float speed = 20f;
     [SerializeField] private float lifetime = 2f;
