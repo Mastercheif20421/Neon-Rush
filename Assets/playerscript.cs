@@ -12,8 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private GameObject laserPrefab;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private SpriteRenderer sprite;
 
     void Update()
     {
@@ -30,18 +29,7 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
 
-        if (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0))
-        {
-            Shoot();
-        }
-
         Flip();
-    }
-    private void Shoot()
-    {
-        GameObject laser = Instantiate(laserPrefab, firePoint.position, Quaternion.identity);
-        float direction = isFacingRight ? 1f : -1f;
-        laser.GetComponent<LaserBeam>().Launch(direction);
     }
 
     private void FixedUpdate()
