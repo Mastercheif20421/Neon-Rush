@@ -9,6 +9,8 @@ public class Gunscript : MonoBehaviour
     
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firepoint; 
+    [SerializeField] private float fireCooldown = 0.3f; //seconds between shots
+    private float nextFireTime; 
 
     private Vector2 AimDirection = Vector2.right; 
 
@@ -37,8 +39,9 @@ public class Gunscript : MonoBehaviour
         scale.y = Mathf.Cos(a) < 0f ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
         gun.localScale = scale;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextFireTime)
         {
+            nextFireTime = Time.time + fireCooldown;
             Shoot();
         }
     }

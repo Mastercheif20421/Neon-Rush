@@ -652,7 +652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1281351498}
   m_Layer: 0
-  m_Name: EdgeCheck (1)
+  m_Name: EdgeCheckLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1116,9 +1116,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc1ee212e048c33d8df6f0b289dc955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  speed: 2
+  speed: 10
   rb: {fileID: 1561957227}
   edgeCheck: {fileID: 167548606}
+  edgeCheckLeft: {fileID: 1281351498}
+  edgeChecks:
+  - {fileID: 1281351498}
   boxCollider: {fileID: 1561957226}
 --- !u!1 &1594447100
 GameObject:
