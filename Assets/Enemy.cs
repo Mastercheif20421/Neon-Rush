@@ -33,5 +33,15 @@ private void Turn()
         scale.x*= -1f;
         transform.localScale = scale;
     }
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    if (!collision.gameObject.CompareTag("Player")) return;
+
+    Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+    if (playerHealth != null)
+    {
+        playerHealth.TakeDamage(999); // enough to kill the player in one touch
+    }
+}
 
 }

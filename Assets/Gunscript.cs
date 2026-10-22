@@ -9,7 +9,7 @@ public class Gunscript : MonoBehaviour
     
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firepoint; 
-    [SerializeField] private float fireCooldown = 0.3f; //seconds between shots
+    [SerializeField] private float fireCooldown = 0.1f; //seconds between shots
     private float nextFireTime; 
 
     private Vector2 AimDirection = Vector2.right; 
