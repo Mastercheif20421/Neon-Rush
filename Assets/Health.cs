@@ -75,7 +75,7 @@ public class Health : MonoBehaviour
                 if (obj != null) obj.SetActive(false);
             }
 
-            Debug.Log("You died. Press R to restart.");
+            Debug.Log("Press R to restart.");
         }
         else
         {
