@@ -65,6 +65,9 @@ public class Health : MonoBehaviour
             Gunscript gunScript = GetComponentInChildren<Gunscript>();
             if (gunScript != null) gunScript.enabled = false;
 
+            Ultbeam ult = GetComponentInChildren<Ultbeam>();
+            if (ult != null) ult.enabled = false;
+
             // make the player (and its children) invisible
             foreach (SpriteRenderer r in GetComponentsInChildren<SpriteRenderer>())
             {
