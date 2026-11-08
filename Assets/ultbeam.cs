@@ -21,6 +21,7 @@ public class Ultbeam : MonoBehaviour
     [Header("Fade")]
     [SerializeField] private float holdTime = 0.15f;  // stays fully visible
     [SerializeField] private float fadeTime = 0.6f;   // then fades out
+    [SerializeField] private ParticleSystem muzzleParticles;
 
     public bool canFire = false;
 
@@ -63,6 +64,8 @@ public class Ultbeam : MonoBehaviour
     IEnumerator Fire()
     {
         isFiring = true;
+
+        if (muzzleParticles != null) muzzleParticles.Play();
 
         // 1. remember exactly where and which way we fired
         Vector2 origin = firePoint.position;
