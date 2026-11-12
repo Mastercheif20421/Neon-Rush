@@ -10,6 +10,7 @@ public class Gunscript : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firepoint; 
     [SerializeField] private float fireCooldown = 0.1f; //seconds between shots
+    [SerializeField] private ParticleSystem muzzleFlash;
     private float nextFireTime; 
 
     public bool canShoot = true;
@@ -51,6 +52,7 @@ public class Gunscript : MonoBehaviour
     public void Shoot()
     {
         if (gunAnim != null) gunAnim.SetTrigger("Shoot");
+        if (muzzleFlash != null) muzzleFlash.Play();
 
         GameObject bullet = Instantiate(bulletPrefab, firepoint.position, Quaternion.identity);
         bullet.GetComponent<Bullet>().Launch(AimDirection);

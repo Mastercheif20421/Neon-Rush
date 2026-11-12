@@ -23,6 +23,20 @@ public class Ultbeam : MonoBehaviour
     [SerializeField] private float fadeTime = 0.6f;   // then fades out
     [SerializeField] private ParticleSystem muzzleParticles;
 
+    [Header("Charge")]
+    [SerializeField] private float chargeTime = 0.6f;          // seconds of charge-up
+    [SerializeField] private ParticleSystem chargeParticles;   // sparks that gather at the barrel
+    [SerializeField] private ParticleSystem sparksParticles;
+
+    [Header("Charge Ramp")]
+    [SerializeField] private float rampPower = 2.5f;        // higher = slower start, harder finish
+    [SerializeField] private float speedStart = 0.4f;       // ChargeSparks playback speed at start
+    [SerializeField] private float speedEnd = 3f;           // ...and right before firing
+    [SerializeField] private float rateStart = 10f;         // ChargeSparks per second at start
+    [SerializeField] private float rateEnd = 150f;          // ...and at the end
+    [SerializeField] private float burstStart = 5f;         // outward Sparks per second at start
+    [SerializeField] private float burstEnd = 120f;         // ...and at the end  
+
     public bool canFire = false;
 
     private float nextReadyTime = 0f;
@@ -63,9 +77,50 @@ public class Ultbeam : MonoBehaviour
 
     IEnumerator Fire()
     {
-        isFiring = true;
+        if (chargeParticles != null) chargeParticles.Play();
 
-        if (muzzleParticles != null) muzzleParticles.Play();
+    float elapsed = 0f;
+    float sparkAccumulator = 0f;
+
+    while (elapsed < chargeTime)
+    {
+        elapsed += Time.deltaTime;
+        float progress = Mathf.Clamp01(elapsed / chargeTime);
+        float ramp = Mathf.Pow(progress, rampPower);   // 0 -> 1, slow at first, fast at the end
+
+    
+        if (chargeParticles != null)
+        {
+            var main = chargeParticles.main;
+            main.simulationSpeed = Mathf.Lerp(speedStart, speedEnd, ramp);
+
+            var emission = chargeParticles.emission;
+            emission.rateOverTime = Mathf.Lerp(rateStart, rateEnd, ramp);
+        }
+
+    
+        if (sparksParticles != null)
+        {
+            sparkAccumulator += Mathf.Lerp(burstStart, burstEnd, ramp) * Time.deltaTime;
+            int count = Mathf.FloorToInt(sparkAccumulator);
+            if (count > 0)
+            {
+                sparksParticles.Emit(count);
+                sparkAccumulator -= count;
+            }
+        }
+
+        yield return null;
+    }
+
+if (chargeParticles != null)
+{
+    chargeParticles.Stop();
+    var main = chargeParticles.main;
+    main.simulationSpeed = 1f;   // reset for next time
+}
+
+if (muzzleParticles != null) muzzleParticles.Play();
 
         // 1. remember exactly where and which way we fired
         Vector2 origin = firePoint.position;
