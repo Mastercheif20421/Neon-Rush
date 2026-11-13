@@ -37,6 +37,9 @@ public class Ultbeam : MonoBehaviour
     [SerializeField] private float burstStart = 5f;         // outward Sparks per second at start
     [SerializeField] private float burstEnd = 120f;         // ...and at the end  
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip chargeAndFireClip;
     public bool canFire = false;
 
     private float nextReadyTime = 0f;
@@ -77,7 +80,14 @@ public class Ultbeam : MonoBehaviour
 
     IEnumerator Fire()
     {
-        if (chargeParticles != null) chargeParticles.Play();
+    isFiring = true;
+
+    if (chargeParticles != null) chargeParticles.Play();
+
+    if (audioSource != null && chargeAndFireClip != null)
+    {
+        audioSource.PlayOneShot(chargeAndFireClip);
+    }
 
     float elapsed = 0f;
     float sparkAccumulator = 0f;
@@ -87,7 +97,6 @@ public class Ultbeam : MonoBehaviour
         elapsed += Time.deltaTime;
         float progress = Mathf.Clamp01(elapsed / chargeTime);
         float ramp = Mathf.Pow(progress, rampPower);   // 0 -> 1, slow at first, fast at the end
-
     
         if (chargeParticles != null)
         {
@@ -113,12 +122,12 @@ public class Ultbeam : MonoBehaviour
         yield return null;
     }
 
-if (chargeParticles != null)
-{
-    chargeParticles.Stop();
-    var main = chargeParticles.main;
-    main.simulationSpeed = 1f;   // reset for next time
-}
+    if (chargeParticles != null)
+    {
+        chargeParticles.Stop();
+        var main = chargeParticles.main;
+        main.simulationSpeed = 1f;   // reset for next time
+    }
 
 if (muzzleParticles != null) muzzleParticles.Play();
 

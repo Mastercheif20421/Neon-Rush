@@ -378,7 +378,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -5582,7 +5582,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 99ae0b8e02e63b8169b940f3517f91b5, type: 2}
+  - {fileID: 2100000, guid: 4d24ed871ebb2e78389a8d093a2d8572, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8345,7 +8345,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 99ae0b8e02e63b8169b940f3517f91b5, type: 2}
+  - {fileID: 2100000, guid: 4d24ed871ebb2e78389a8d093a2d8572, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22876,6 +22876,7 @@ GameObject:
   - component: {fileID: 2067170974}
   - component: {fileID: 2067170976}
   - component: {fileID: 2067170975}
+  - component: {fileID: 2067170977}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -23071,7 +23072,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3560464694512810057, guid: e5dc31e65b4d325e993a98b25ebc845a, type: 3}
   firepoint: {fileID: 1296568724}
   fireCooldown: 0.3
-  muzzleFlash: {fileID: 0}
+  muzzleFlash: {fileID: 1564224675}
   canShoot: 1
 --- !u!114 &2067170974
 MonoBehaviour:
@@ -23128,7 +23129,7 @@ MonoBehaviour:
   holdTime: 0.2
   fadeTime: 1
   muzzleParticles: {fileID: 514058965}
-  chargeTime: 1.5
+  chargeTime: 2.5
   chargeParticles: {fileID: 1456092597}
   sparksParticles: {fileID: 1602529869}
   rampPower: 4
@@ -23138,7 +23139,106 @@ MonoBehaviour:
   rateEnd: 200
   burstStart: 10
   burstEnd: 120
+  audioSource: {fileID: 2067170977}
+  chargeAndFireClip: {fileID: 8300000, guid: 51684baf61f98a95285280d5ba46bbca, type: 3}
   canFire: 0
+--- !u!82 &2067170977
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067170966}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
