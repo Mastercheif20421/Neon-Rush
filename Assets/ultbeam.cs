@@ -205,12 +205,12 @@ if (muzzleParticles != null) muzzleParticles.Play();
         if (remaining <= 0f)
         {
             cooldownText.text = "ULT READY [Q]";
-            cooldownText.color = Color.green;
+            cooldownText.color = Color.cyan;
         }
         else
         {
-            cooldownText.text = "ULT " + Mathf.CeilToInt(remaining) + "s";
-            cooldownText.color = Color.gray;
+            cooldownText.text = "ULT COOLDOWN " + Mathf.CeilToInt(remaining) + "s";
+            cooldownText.color = Color.red;
         }
     }
 }

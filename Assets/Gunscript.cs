@@ -11,6 +11,9 @@ public class Gunscript : MonoBehaviour
     [SerializeField] private Transform firepoint; 
     [SerializeField] private float fireCooldown = 0.1f; //seconds between shots
     [SerializeField] private ParticleSystem muzzleFlash;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shotClip;
+
     private float nextFireTime; 
 
     public bool canShoot = true;
@@ -53,6 +56,7 @@ public class Gunscript : MonoBehaviour
     {
         if (gunAnim != null) gunAnim.SetTrigger("Shoot");
         if (muzzleFlash != null) muzzleFlash.Play();
+        if(audioSource !=null && shotClip != null) audioSource.PlayOneShot(shotClip);
 
         GameObject bullet = Instantiate(bulletPrefab, firepoint.position, Quaternion.identity);
         bullet.GetComponent<Bullet>().Launch(AimDirection);
