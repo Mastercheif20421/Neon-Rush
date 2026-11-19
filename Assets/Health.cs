@@ -1,15 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Health : MonoBehaviour
 {
+    [Header("Health")]
     [SerializeField] private int maxHealth = 3;
     [SerializeField] private bool isPlayer = false;
-    [SerializeField] private GameObject[] alsoHide; // e.g. the gun, if it is NOT a child of the player
+    [SerializeField] private GameObject[] alsoHide;
+
+    [Header("Feedback")]
+    [SerializeField] private SpriteRenderer flashSprite;
+    [SerializeField] private float flashTime = 0.1f;
+    [SerializeField] private float invincibleTime = 1f;   // player only
+    [SerializeField] private GameObject deathEffect;
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip deathClip;
 
     private int currentHealth;
     private bool isDead = false;
+    private float invincibleUntil = 0f;
+
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
 
     private static HashSet<string> deadEnemies = new HashSet<string>();
 
@@ -34,6 +48,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(int amount)
     {
         if (isDead) return;
+        if (isPlayer && Time.time < invincibleUntil) return;
 
         currentHealth -= amount;
         Debug.Log(gameObject.name + " health: " + currentHealth);
@@ -41,14 +56,39 @@ public class Health : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+            return;
         }
+
+        if (isPlayer) invincibleUntil = Time.time + invincibleTime;
+        PlaySound(hurtClip);
+        if (flashSprite != null) StartCoroutine(Flash());
+    }
+
+    IEnumerator Flash()
+    {
+        Color original = flashSprite.color;
+        flashSprite.color = Color.red;
+        yield return new WaitForSeconds(flashTime);
+        flashSprite.color = original;
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip == null || Camera.main == null) return;
+        // plays at the camera so it is full volume, and survives this object being destroyed
+        AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
     }
 
     private void Die()
     {
         isDead = true;
+        PlaySound(deathClip);
 
-        // stop physics so it can't move, fall or be hit
+        if (deathEffect != null)
+        {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        }
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -58,7 +98,6 @@ public class Health : MonoBehaviour
 
         if (isPlayer)
         {
-            // switch off controls
             PlayerMovement move = GetComponent<PlayerMovement>();
             if (move != null) move.enabled = false;
 
@@ -68,7 +107,6 @@ public class Health : MonoBehaviour
             Ultbeam ult = GetComponentInChildren<Ultbeam>();
             if (ult != null) ult.enabled = false;
 
-            // make the player (and its children) invisible
             foreach (SpriteRenderer r in GetComponentsInChildren<SpriteRenderer>())
             {
                 r.enabled = false;
@@ -78,11 +116,10 @@ public class Health : MonoBehaviour
                 if (obj != null) obj.SetActive(false);
             }
 
-            Debug.Log("Press R to restart.");
+            Debug.Log("You died. Press R to restart.");
         }
         else
         {
-            // stop the walking script, then remove the enemy
             Enemy enemy = GetComponent<Enemy>();
             if (enemy != null) enemy.enabled = false;
 

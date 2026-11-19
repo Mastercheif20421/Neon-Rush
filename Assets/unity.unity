@@ -2907,6 +2907,7 @@ GameObject:
   - component: {fileID: 236402332}
   - component: {fileID: 236402331}
   - component: {fileID: 236402330}
+  - component: {fileID: 236402334}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3030,8 +3031,23 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2067170970}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &236402334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236402329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7e1268d9af225149f5313903d99a69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
+  target: {fileID: 2067170970}
+  smoothTime: 0.15
+  offset: {x: 0, y: 1, z: -10}
 --- !u!1 &268625505
 GameObject:
   m_ObjectHideFlags: 0
@@ -13303,6 +13319,12 @@ MonoBehaviour:
   maxHealth: 1
   isPlayer: 1
   alsoHide: []
+  flashSprite: {fileID: 0}
+  flashTime: 0.1
+  invincibleTime: 1
+  deathEffect: {fileID: 0}
+  hurtClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!1 &1564224672
 GameObject:
   m_ObjectHideFlags: 0
@@ -23147,7 +23169,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -23224,7 +23246,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 236402333}
   - {fileID: 1187787871}
   - {fileID: 25878770}
   m_Father: {fileID: 0}
@@ -23331,6 +23352,12 @@ MonoBehaviour:
   maxHealth: 1
   isPlayer: 1
   alsoHide: []
+  flashSprite: {fileID: 0}
+  flashTime: 0.1
+  invincibleTime: 1
+  deathEffect: {fileID: 0}
+  hurtClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!114 &2067170975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23383,6 +23410,7 @@ MonoBehaviour:
   burstEnd: 120
   audioSource: {fileID: 2067170977}
   chargeAndFireClip: {fileID: 8300000, guid: 51684baf61f98a95285280d5ba46bbca, type: 3}
+  cameraFollow: {fileID: 236402334}
   canFire: 0
 --- !u!82 &2067170977
 AudioSource:
@@ -23564,6 +23592,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 236402333}
   - {fileID: 1629264261}
   - {fileID: 2067170970}
   - {fileID: 991070439}

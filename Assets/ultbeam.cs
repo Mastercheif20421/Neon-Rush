@@ -40,6 +40,9 @@ public class Ultbeam : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip chargeAndFireClip;
+
+    [Header("Camera")]
+    [SerializeField] private CameraFollow cameraFollow;
     public bool canFire = false;
 
     private float nextReadyTime = 0f;
@@ -129,7 +132,10 @@ public class Ultbeam : MonoBehaviour
         main.simulationSpeed = 1f;   // reset for next time
     }
 
-if (muzzleParticles != null) muzzleParticles.Play();
+    if (muzzleParticles != null) muzzleParticles.Play();
+
+    if (cameraFollow != null) cameraFollow.Shake(0.5f, 0.25f);
+
 
         // 1. remember exactly where and which way we fired
         Vector2 origin = firePoint.position;

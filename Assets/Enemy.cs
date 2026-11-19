@@ -40,7 +40,7 @@ private void OnCollisionEnter2D(Collision2D collision)
     Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
     if (playerHealth != null)
     {
-        playerHealth.TakeDamage(999); // enough to kill the player in one touch
+        playerHealth.TakeDamage(1); // enough to kill the player in one touch
     }
 }
 
