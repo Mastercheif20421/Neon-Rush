@@ -23355,7 +23355,7 @@ MonoBehaviour:
   flashSprite: {fileID: 0}
   flashTime: 0.1
   invincibleTime: 1
-  deathEffect: {fileID: 0}
+  deathEffect: {fileID: 8824892741501316503, guid: 1a3c0e246443800d18c384e24140d32b, type: 3}
   hurtClip: {fileID: 0}
   deathClip: {fileID: 0}
 --- !u!114 &2067170975
